@@ -44,33 +44,48 @@ export function Canvas() {
   const getViewportStyles = () => {
     switch (selectedViewport) {
       case "mobile":
-        return { maxWidth: "375px", margin: "0 auto" };
+        return { maxWidth: "375px", margin: "20px auto", boxShadow: "0 4px 6px rgba(0,0,0,0.1)" };
       case "tablet":
-        return { maxWidth: "768px", margin: "0 auto" };
+        return { maxWidth: "768px", margin: "20px auto", boxShadow: "0 4px 6px rgba(0,0,0,0.1)" };
       default:
-        return { maxWidth: "100%" };
+        return { maxWidth: "100%", margin: "0" };
     }
   };
 
   if (!pageContent) {
     return (
-      <div className="canvas-empty">
-        <p>No page content loaded. Create a new page to get started.</p>
+      <div style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100%",
+        color: "#9ca3af",
+        fontSize: "14px"
+      }}>
+        <div style={{ textAlign: "center" }}>
+          <div style={{ fontSize: "48px", marginBottom: "16px" }}>✨</div>
+          <p>No page content loaded. Create a new page to get started.</p>
+        </div>
       </div>
     );
   }
 
   return (
     <DndContext sensors={sensors} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
-      <div className="canvas-container" style={getViewportStyles()}>
+      <div style={{ 
+        padding: selectedViewport === "desktop" ? "0" : "20px",
+        minHeight: "100%",
+        ...getViewportStyles()
+      }}>
         <div
           id="canvas"
-          className="canvas"
           onClick={() => setSelectedNode(null)}
           style={{
-            minHeight: "100vh",
+            minHeight: selectedViewport === "desktop" ? "100vh" : "600px",
             backgroundColor: "#ffffff",
             position: "relative",
+            borderRadius: selectedViewport !== "desktop" ? "8px" : "0",
+            overflow: "hidden",
           }}
         >
           <ComponentRenderer
@@ -83,4 +98,3 @@ export function Canvas() {
     </DndContext>
   );
 }
-

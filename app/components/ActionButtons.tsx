@@ -27,12 +27,26 @@ export function SaveButton() {
       disabled={fetcher.state === "submitting"}
       style={{
         padding: "8px 16px",
-        backgroundColor: "#0066cc",
-        color: "#fff",
-        border: "none",
-        borderRadius: "4px",
+        backgroundColor: "#ffffff",
+        color: "#374151",
+        border: "1px solid #e5e7eb",
+        borderRadius: "6px",
         cursor: fetcher.state === "submitting" ? "wait" : "pointer",
-        fontWeight: "600",
+        fontWeight: "500",
+        fontSize: "13px",
+        transition: "all 0.2s",
+      }}
+      onMouseEnter={(e) => {
+        if (fetcher.state !== "submitting") {
+          e.currentTarget.style.backgroundColor = "#f9fafb";
+          e.currentTarget.style.borderColor = "#d1d5db";
+        }
+      }}
+      onMouseLeave={(e) => {
+        if (fetcher.state !== "submitting") {
+          e.currentTarget.style.backgroundColor = "#ffffff";
+          e.currentTarget.style.borderColor = "#e5e7eb";
+        }
       }}
     >
       {fetcher.state === "submitting" ? "Saving..." : "Save"}
@@ -66,16 +80,28 @@ export function PublishButton() {
       disabled={fetcher.state === "submitting"}
       style={{
         padding: "8px 16px",
-        backgroundColor: "#00aa00",
-        color: "#fff",
+        backgroundColor: "#10b981",
+        color: "#ffffff",
         border: "none",
-        borderRadius: "4px",
+        borderRadius: "6px",
         cursor: fetcher.state === "submitting" ? "wait" : "pointer",
         fontWeight: "600",
+        fontSize: "13px",
+        transition: "all 0.2s",
+        boxShadow: "0 1px 2px rgba(0,0,0,0.05)",
+      }}
+      onMouseEnter={(e) => {
+        if (fetcher.state !== "submitting") {
+          e.currentTarget.style.backgroundColor = "#059669";
+        }
+      }}
+      onMouseLeave={(e) => {
+        if (fetcher.state !== "submitting") {
+          e.currentTarget.style.backgroundColor = "#10b981";
+        }
       }}
     >
       {fetcher.state === "submitting" ? "Publishing..." : "Publish"}
     </button>
   );
 }
-

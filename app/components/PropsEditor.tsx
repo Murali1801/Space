@@ -1,7 +1,5 @@
-import React from "react";
-import { useFetcher } from "@remix-run/react";
 import { useEditorStore } from "~/lib/store";
-import { ProductPickerModal } from "./ProductPickerModal";
+import React from "react";
 
 interface PropsEditorProps {
   nodeId: string;
@@ -26,72 +24,196 @@ export function PropsEditor({ nodeId }: PropsEditorProps) {
     switch (node.type) {
       case "heading":
         return (
-          <div>
-            <label>Heading Text</label>
-            <input
-              type="text"
-              value={node.props.heading || ""}
-              onChange={(e) => handlePropChange("heading", e.target.value)}
-            />
-            <label>Level</label>
-            <select
-              value={node.props.level || 1}
-              onChange={(e) => handlePropChange("level", parseInt(e.target.value))}
-            >
-              {[1, 2, 3, 4, 5, 6].map((level) => (
-                <option key={level} value={level}>
-                  H{level}
-                </option>
-              ))}
-            </select>
+          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+            <div>
+              <label style={{ display: "block", fontSize: "12px", marginBottom: "6px", color: "#374151", fontWeight: "500" }}>
+                Heading Text
+              </label>
+              <input
+                type="text"
+                value={node.props.heading || ""}
+                onChange={(e) => handlePropChange("heading", e.target.value)}
+                style={{
+                  width: "100%",
+                  padding: "8px 12px",
+                  border: "1px solid #e5e7eb",
+                  borderRadius: "6px",
+                  fontSize: "13px",
+                  outline: "none",
+                }}
+                onFocus={(e) => {
+                  e.target.style.borderColor = "#667eea";
+                }}
+                onBlur={(e) => {
+                  e.target.style.borderColor = "#e5e7eb";
+                }}
+              />
+            </div>
+            <div>
+              <label style={{ display: "block", fontSize: "12px", marginBottom: "6px", color: "#374151", fontWeight: "500" }}>
+                Level
+              </label>
+              <select
+                value={node.props.level || 1}
+                onChange={(e) => handlePropChange("level", parseInt(e.target.value))}
+                style={{
+                  width: "100%",
+                  padding: "8px 12px",
+                  border: "1px solid #e5e7eb",
+                  borderRadius: "6px",
+                  fontSize: "13px",
+                  outline: "none",
+                  cursor: "pointer",
+                }}
+              >
+                {[1, 2, 3, 4, 5, 6].map((level) => (
+                  <option key={level} value={level}>
+                    H{level}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         );
       
       case "text":
         return (
           <div>
-            <label>Text Content</label>
+            <label style={{ display: "block", fontSize: "12px", marginBottom: "6px", color: "#374151", fontWeight: "500" }}>
+              Text Content
+            </label>
             <textarea
               value={node.props.text || ""}
               onChange={(e) => handlePropChange("text", e.target.value)}
               rows={4}
+              style={{
+                width: "100%",
+                padding: "8px 12px",
+                border: "1px solid #e5e7eb",
+                borderRadius: "6px",
+                fontSize: "13px",
+                outline: "none",
+                fontFamily: "inherit",
+                resize: "vertical",
+              }}
+              onFocus={(e) => {
+                e.target.style.borderColor = "#667eea";
+              }}
+              onBlur={(e) => {
+                e.target.style.borderColor = "#e5e7eb";
+              }}
             />
           </div>
         );
       
       case "button":
         return (
-          <div>
-            <label>Button Text</label>
-            <input
-              type="text"
-              value={node.props.text || ""}
-              onChange={(e) => handlePropChange("text", e.target.value)}
-            />
-            <label>Link URL</label>
-            <input
-              type="text"
-              value={node.props.href || ""}
-              onChange={(e) => handlePropChange("href", e.target.value)}
-            />
+          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+            <div>
+              <label style={{ display: "block", fontSize: "12px", marginBottom: "6px", color: "#374151", fontWeight: "500" }}>
+                Button Text
+              </label>
+              <input
+                type="text"
+                value={node.props.text || ""}
+                onChange={(e) => handlePropChange("text", e.target.value)}
+                style={{
+                  width: "100%",
+                  padding: "8px 12px",
+                  border: "1px solid #e5e7eb",
+                  borderRadius: "6px",
+                  fontSize: "13px",
+                  outline: "none",
+                }}
+                onFocus={(e) => {
+                  e.target.style.borderColor = "#667eea";
+                }}
+                onBlur={(e) => {
+                  e.target.style.borderColor = "#e5e7eb";
+                }}
+              />
+            </div>
+            <div>
+              <label style={{ display: "block", fontSize: "12px", marginBottom: "6px", color: "#374151", fontWeight: "500" }}>
+                Link URL
+              </label>
+              <input
+                type="text"
+                value={node.props.href || ""}
+                onChange={(e) => handlePropChange("href", e.target.value)}
+                placeholder="https://..."
+                style={{
+                  width: "100%",
+                  padding: "8px 12px",
+                  border: "1px solid #e5e7eb",
+                  borderRadius: "6px",
+                  fontSize: "13px",
+                  outline: "none",
+                }}
+                onFocus={(e) => {
+                  e.target.style.borderColor = "#667eea";
+                }}
+                onBlur={(e) => {
+                  e.target.style.borderColor = "#e5e7eb";
+                }}
+              />
+            </div>
           </div>
         );
       
       case "image":
         return (
-          <div>
-            <label>Image URL</label>
-            <input
-              type="text"
-              value={node.props.src || ""}
-              onChange={(e) => handlePropChange("src", e.target.value)}
-            />
-            <label>Alt Text</label>
-            <input
-              type="text"
-              value={node.props.alt || ""}
-              onChange={(e) => handlePropChange("alt", e.target.value)}
-            />
+          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+            <div>
+              <label style={{ display: "block", fontSize: "12px", marginBottom: "6px", color: "#374151", fontWeight: "500" }}>
+                Image URL
+              </label>
+              <input
+                type="text"
+                value={node.props.src || ""}
+                onChange={(e) => handlePropChange("src", e.target.value)}
+                placeholder="https://..."
+                style={{
+                  width: "100%",
+                  padding: "8px 12px",
+                  border: "1px solid #e5e7eb",
+                  borderRadius: "6px",
+                  fontSize: "13px",
+                  outline: "none",
+                }}
+                onFocus={(e) => {
+                  e.target.style.borderColor = "#667eea";
+                }}
+                onBlur={(e) => {
+                  e.target.style.borderColor = "#e5e7eb";
+                }}
+              />
+            </div>
+            <div>
+              <label style={{ display: "block", fontSize: "12px", marginBottom: "6px", color: "#374151", fontWeight: "500" }}>
+                Alt Text
+              </label>
+              <input
+                type="text"
+                value={node.props.alt || ""}
+                onChange={(e) => handlePropChange("alt", e.target.value)}
+                placeholder="Description"
+                style={{
+                  width: "100%",
+                  padding: "8px 12px",
+                  border: "1px solid #e5e7eb",
+                  borderRadius: "6px",
+                  fontSize: "13px",
+                  outline: "none",
+                }}
+                onFocus={(e) => {
+                  e.target.style.borderColor = "#667eea";
+                }}
+                onBlur={(e) => {
+                  e.target.style.borderColor = "#e5e7eb";
+                }}
+              />
+            </div>
           </div>
         );
       
@@ -101,25 +223,47 @@ export function PropsEditor({ nodeId }: PropsEditorProps) {
       case "grid":
         return (
           <div>
-            <label>Columns</label>
+            <label style={{ display: "block", fontSize: "12px", marginBottom: "6px", color: "#374151", fontWeight: "500" }}>
+              Columns
+            </label>
             <input
               type="number"
               value={node.props.columns || 3}
               onChange={(e) => handlePropChange("columns", parseInt(e.target.value))}
               min={1}
               max={12}
+              style={{
+                width: "100%",
+                padding: "8px 12px",
+                border: "1px solid #e5e7eb",
+                borderRadius: "6px",
+                fontSize: "13px",
+                outline: "none",
+              }}
+              onFocus={(e) => {
+                e.target.style.borderColor = "#667eea";
+              }}
+              onBlur={(e) => {
+                e.target.style.borderColor = "#e5e7eb";
+              }}
             />
           </div>
         );
       
       default:
-        return <div>No props available for this component</div>;
+        return (
+          <div style={{ color: "#9ca3af", fontSize: "13px", textAlign: "center", padding: "20px" }}>
+            No props available for this component
+          </div>
+        );
     }
   };
 
   return (
-    <div style={{ padding: "16px", borderTop: "1px solid #e0e0e0" }}>
-      <h3 style={{ fontSize: "14px", fontWeight: "600", marginBottom: "12px" }}>Properties</h3>
+    <div style={{ paddingTop: "16px", borderTop: "1px solid #e5e7eb", marginTop: "16px" }}>
+      <h3 style={{ fontSize: "12px", fontWeight: "600", marginBottom: "12px", color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+        Properties
+      </h3>
       {renderPropsEditor()}
     </div>
   );
@@ -131,31 +275,36 @@ interface ProductBoxPropsEditorProps {
 }
 
 function ProductBoxPropsEditor({ node, onUpdate }: ProductBoxPropsEditorProps) {
-  const [isPickerOpen, setIsPickerOpen] = React.useState(false);
-
   return (
-    <div>
-      <label>Product</label>
-      <div style={{ marginBottom: "8px" }}>
-        {node.props.productId ? (
-          <div>
-            <span>Product ID: {node.props.productId}</span>
-            <button onClick={() => onUpdate("productId", "")} style={{ marginLeft: "8px" }}>
-              Clear
-            </button>
-          </div>
-        ) : (
-          <button onClick={() => setIsPickerOpen(true)}>Select Product</button>
-        )}
+    <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+      <div>
+        <label style={{ display: "block", fontSize: "12px", marginBottom: "6px", color: "#374151", fontWeight: "500" }}>
+          Product ID
+        </label>
+        <input
+          type="text"
+          value={node.props.productId || ""}
+          onChange={(e) => onUpdate("productId", e.target.value)}
+          placeholder="gid://shopify/Product/..."
+          style={{
+            width: "100%",
+            padding: "8px 12px",
+            border: "1px solid #e5e7eb",
+            borderRadius: "6px",
+            fontSize: "13px",
+            outline: "none",
+          }}
+          onFocus={(e) => {
+            e.target.style.borderColor = "#667eea";
+          }}
+          onBlur={(e) => {
+            e.target.style.borderColor = "#e5e7eb";
+          }}
+        />
       </div>
-      <ProductPickerModal
-        isOpen={isPickerOpen}
-        onClose={() => setIsPickerOpen(false)}
-        onSelect={(productId) => {
-          onUpdate("productId", productId);
-        }}
-      />
+      <p style={{ fontSize: "11px", color: "#9ca3af", margin: 0 }}>
+        Use the product picker to select a product
+      </p>
     </div>
   );
 }
-

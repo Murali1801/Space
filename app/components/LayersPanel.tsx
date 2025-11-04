@@ -7,8 +7,20 @@ export function LayersPanel() {
 
   if (!pageContent) {
     return (
-      <div className="layers-panel" style={{ width: "250px", padding: "16px", backgroundColor: "#f5f5f5", height: "100vh", overflowY: "auto" }}>
-        <p style={{ color: "#999", textAlign: "center", marginTop: "40px" }}>
+      <div style={{ 
+        width: "240px", 
+        padding: "24px", 
+        backgroundColor: "#ffffff",
+        borderRight: "1px solid #e5e7eb",
+        height: "100vh", 
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        color: "#9ca3af"
+      }}>
+        <div style={{ fontSize: "48px", marginBottom: "16px" }}>📋</div>
+        <p style={{ fontSize: "14px", textAlign: "center", margin: 0 }}>
           No page content
         </p>
       </div>
@@ -16,9 +28,24 @@ export function LayersPanel() {
   }
 
   return (
-    <div className="layers-panel" style={{ width: "250px", padding: "16px", backgroundColor: "#f5f5f5", height: "100vh", overflowY: "auto" }}>
-      <h2 style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "16px" }}>Layers</h2>
-      <LayerItem node={pageContent.root} depth={0} selectedNodeId={selectedNodeId} onSelect={setSelectedNode} />
+    <div style={{ 
+      width: "240px", 
+      backgroundColor: "#ffffff",
+      borderRight: "1px solid #e5e7eb",
+      height: "100vh", 
+      display: "flex",
+      flexDirection: "column",
+      overflow: "hidden"
+    }}>
+      {/* Header */}
+      <div style={{ padding: "16px", borderBottom: "1px solid #e5e7eb" }}>
+        <h2 style={{ fontSize: "16px", fontWeight: "600", margin: 0, color: "#111827" }}>Layers</h2>
+      </div>
+      
+      {/* Layers List */}
+      <div style={{ flex: 1, overflowY: "auto", padding: "8px" }}>
+        <LayerItem node={pageContent.root} depth={0} selectedNodeId={selectedNodeId} onSelect={setSelectedNode} />
+      </div>
     </div>
   );
 }
@@ -39,19 +66,35 @@ function LayerItem({ node, depth, selectedNodeId, onSelect }: LayerItemProps) {
       <div
         onClick={() => onSelect(node.id)}
         style={{
-          padding: "6px 8px",
-          paddingLeft: `${depth * 16 + 8}px`,
-          backgroundColor: isSelected ? "#e3f2fd" : "transparent",
+          padding: "8px 12px",
+          paddingLeft: `${depth * 16 + 12}px`,
+          backgroundColor: isSelected ? "#eff6ff" : "transparent",
           cursor: "pointer",
-          borderRadius: "4px",
+          borderRadius: "6px",
           marginBottom: "2px",
           display: "flex",
           alignItems: "center",
           gap: "8px",
-          fontSize: "12px",
+          fontSize: "13px",
+          fontWeight: isSelected ? "500" : "400",
+          color: isSelected ? "#2563eb" : "#374151",
+          border: isSelected ? "1px solid #93c5fd" : "1px solid transparent",
+          transition: "all 0.15s",
+        }}
+        onMouseEnter={(e) => {
+          if (!isSelected) {
+            e.currentTarget.style.backgroundColor = "#f9fafb";
+          }
+        }}
+        onMouseLeave={(e) => {
+          if (!isSelected) {
+            e.currentTarget.style.backgroundColor = "transparent";
+          }
         }}
       >
-        <span style={{ fontSize: "10px" }}>{hasChildren ? "▾" : "▸"}</span>
+        <span style={{ fontSize: "10px", color: "#9ca3af" }}>
+          {hasChildren ? "▾" : "▸"}
+        </span>
         <span>{getComponentName(node.type)}</span>
       </div>
       {hasChildren && (
@@ -70,4 +113,3 @@ function LayerItem({ node, depth, selectedNodeId, onSelect }: LayerItemProps) {
     </div>
   );
 }
-

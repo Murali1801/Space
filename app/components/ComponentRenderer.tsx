@@ -31,10 +31,12 @@ export function ComponentRenderer({ node, isSelected, onSelect, depth = 0 }: Com
   const cssStyles: CSSProperties = {
     ...styles,
     position: "relative",
-    outline: isSelected ? "2px solid #0066cc" : "none",
+    outline: isSelected ? "2px solid #667eea" : "none",
     outlineOffset: "2px",
     cursor: isSelected ? "pointer" : "default",
     transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : undefined,
+    opacity: isDragging ? 0.5 : 1,
+    transition: "outline 0.15s ease",
   };
 
   const handleClick = (e: React.MouseEvent) => {

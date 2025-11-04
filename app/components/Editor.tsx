@@ -41,26 +41,66 @@ export function Editor() {
   }, [pageContent, setPageContent]);
 
   return (
-    <div style={{ display: "flex", height: "100vh", overflow: "hidden" }}>
+    <div style={{ 
+      display: "flex", 
+      height: "100vh", 
+      overflow: "hidden",
+      backgroundColor: "#f8f9fa",
+      fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+    }}>
       {/* Component Library */}
       <ComponentLibrary />
 
       {/* Main Editor Area */}
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
-        {/* Toolbar */}
-        <div style={{ padding: "12px 16px", backgroundColor: "#ffffff", borderBottom: "1px solid #e0e0e0", display: "flex", alignItems: "center", gap: "16px" }}>
-          <h1 style={{ fontSize: "20px", fontWeight: "bold", margin: 0 }}>Space Editor</h1>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", backgroundColor: "#ffffff" }}>
+        {/* Modern Toolbar */}
+        <div style={{ 
+          padding: "0 24px", 
+          height: "64px",
+          backgroundColor: "#ffffff", 
+          borderBottom: "1px solid #e5e7eb", 
+          display: "flex", 
+          alignItems: "center", 
+          gap: "24px",
+          boxShadow: "0 1px 3px rgba(0,0,0,0.05)"
+        }}>
+          {/* Logo/Brand */}
+          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+            <div style={{ 
+              width: "32px", 
+              height: "32px", 
+              borderRadius: "6px",
+              background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "white",
+              fontWeight: "bold",
+              fontSize: "18px"
+            }}>
+              S
+            </div>
+            <h1 style={{ fontSize: "18px", fontWeight: "600", margin: 0, color: "#111827" }}>Space</h1>
+          </div>
           
+          {/* Divider */}
+          <div style={{ width: "1px", height: "32px", backgroundColor: "#e5e7eb" }} />
+
           {/* Viewport Toggles */}
-          <div style={{ marginLeft: "auto", display: "flex", gap: "8px" }}>
+          <div style={{ display: "flex", gap: "4px", backgroundColor: "#f3f4f6", padding: "4px", borderRadius: "8px" }}>
             <button
               onClick={() => setViewport("mobile")}
               style={{
                 padding: "6px 12px",
-                border: selectedViewport === "mobile" ? "2px solid #0066cc" : "1px solid #ddd",
-                borderRadius: "4px",
-                backgroundColor: selectedViewport === "mobile" ? "#e3f2fd" : "#fff",
+                border: "none",
+                borderRadius: "6px",
+                backgroundColor: selectedViewport === "mobile" ? "#ffffff" : "transparent",
+                color: selectedViewport === "mobile" ? "#111827" : "#6b7280",
                 cursor: "pointer",
+                fontSize: "13px",
+                fontWeight: selectedViewport === "mobile" ? "600" : "400",
+                boxShadow: selectedViewport === "mobile" ? "0 1px 2px rgba(0,0,0,0.05)" : "none",
+                transition: "all 0.2s",
               }}
             >
               📱 Mobile
@@ -69,10 +109,15 @@ export function Editor() {
               onClick={() => setViewport("tablet")}
               style={{
                 padding: "6px 12px",
-                border: selectedViewport === "tablet" ? "2px solid #0066cc" : "1px solid #ddd",
-                borderRadius: "4px",
-                backgroundColor: selectedViewport === "tablet" ? "#e3f2fd" : "#fff",
+                border: "none",
+                borderRadius: "6px",
+                backgroundColor: selectedViewport === "tablet" ? "#ffffff" : "transparent",
+                color: selectedViewport === "tablet" ? "#111827" : "#6b7280",
                 cursor: "pointer",
+                fontSize: "13px",
+                fontWeight: selectedViewport === "tablet" ? "600" : "400",
+                boxShadow: selectedViewport === "tablet" ? "0 1px 2px rgba(0,0,0,0.05)" : "none",
+                transition: "all 0.2s",
               }}
             >
               📱 Tablet
@@ -81,35 +126,56 @@ export function Editor() {
               onClick={() => setViewport("desktop")}
               style={{
                 padding: "6px 12px",
-                border: selectedViewport === "desktop" ? "2px solid #0066cc" : "1px solid #ddd",
-                borderRadius: "4px",
-                backgroundColor: selectedViewport === "desktop" ? "#e3f2fd" : "#fff",
+                border: "none",
+                borderRadius: "6px",
+                backgroundColor: selectedViewport === "desktop" ? "#ffffff" : "transparent",
+                color: selectedViewport === "desktop" ? "#111827" : "#6b7280",
                 cursor: "pointer",
+                fontSize: "13px",
+                fontWeight: selectedViewport === "desktop" ? "600" : "400",
+                boxShadow: selectedViewport === "desktop" ? "0 1px 2px rgba(0,0,0,0.05)" : "none",
+                transition: "all 0.2s",
               }}
             >
               💻 Desktop
             </button>
           </div>
 
-          {/* Save Button */}
-          <SaveButton />
+          {/* Spacer */}
+          <div style={{ flex: 1 }} />
 
-          {/* Publish Button */}
-          <PublishButton />
+          {/* Action Buttons */}
+          <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+            <SaveButton />
+            <PublishButton />
+          </div>
         </div>
 
         {/* Canvas Area */}
-        <div style={{ flex: 1, overflow: "auto", backgroundColor: "#f0f0f0" }}>
+        <div style={{ 
+          flex: 1, 
+          overflow: "auto", 
+          backgroundColor: "#f9fafb",
+          backgroundImage: "radial-gradient(circle, #e5e7eb 1px, transparent 1px)",
+          backgroundSize: "20px 20px"
+        }}>
           <Canvas />
         </div>
       </div>
 
-      {/* Layers Panel */}
-      <LayersPanel />
+      {/* Right Sidebar - Layers & Styles */}
+      <div style={{ 
+        display: "flex", 
+        width: "320px",
+        backgroundColor: "#ffffff",
+        borderLeft: "1px solid #e5e7eb"
+      }}>
+        {/* Layers Panel */}
+        <LayersPanel />
 
-      {/* Style Inspector */}
-      <StyleInspector />
+        {/* Style Inspector */}
+        <StyleInspector />
+      </div>
     </div>
   );
 }
-
