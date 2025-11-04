@@ -10,20 +10,33 @@ const shopify = shopifyApi({
   apiVersion: LATEST_API_VERSION,
   isEmbeddedApp: true,
   restResources,
+  // Note: Session storage needs to be configured for production
+  // For now, this will use in-memory storage (not recommended for production)
 });
 
 export { shopify };
 
-// For Remix authentication
+// For Remix authentication - simplified version
+// Note: This needs proper session storage implementation for production
 export async function authenticateAdmin(request: Request) {
-  const session = await shopify.auth.callback({
-    rawRequest: request,
-    rawResponse: new Response(),
-  });
+  const url = new URL(request.url);
+  const shop = url.searchParams.get("shop");
 
+  if (!shop) {
+    throw new Error("Missing shop parameter. Access this app through Shopify Admin.");
+  }
+
+  // For now, return a basic session structure
+  // In production, you need to implement proper session storage
+  // and use shopify.auth.begin() and shopify.auth.callback()
+  
   return {
-    session,
-    admin: new shopify.clients.Graphql({ session }),
+    session: {
+      shop,
+      accessToken: "", // Will be populated after OAuth
+      isOnline: true,
+    },
+    admin: null, // Will be created after OAuth completes
   };
 }
 
