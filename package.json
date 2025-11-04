@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "shopify app dev",
-    "build": "shopify app build",
+    "build": "remix build",
+    "start": "remix-serve build/server/index.js",
     "deploy": "shopify app deploy",
     "test": "vitest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
