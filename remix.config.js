@@ -1,6 +1,7 @@
-import type { Config } from "@remix-run/dev";
-
+/** @type {import('@remix-run/dev').AppConfig} */
 export default {
   ignoredRouteFiles: ["**/.*"],
-} satisfies Config;
-
+  serverBuildPath: "build/server/index.js",
+  serverModuleFormat: "esm",
+  serverPlatform: "node",
+};
