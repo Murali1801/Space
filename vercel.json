@@ -2,6 +2,10 @@
   "buildCommand": "npm run build",
   "rewrites": [
     {
+      "source": "/build/:path*",
+      "destination": "/build/:path*"
+    },
+    {
       "source": "/(.*)",
       "destination": "/api"
     }

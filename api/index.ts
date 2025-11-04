@@ -16,6 +16,11 @@ export default async function handler(
   res: VercelResponse
 ) {
   try {
+    // Skip API handler for static assets
+    if (req.url?.startsWith("/build/") || req.url?.startsWith("/favicon")) {
+      return res.status(404).send("Not found");
+    }
+
     // Convert Vercel request to Web API Request
     const protocol = req.headers["x-forwarded-proto"] || "https";
     const host = req.headers.host || "";
@@ -52,6 +57,16 @@ export default async function handler(
     res.send(responseBody);
   } catch (error) {
     console.error("Remix handler error:", error);
-    res.status(500).json({ error: "Internal server error", details: error instanceof Error ? error.message : String(error) });
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    const errorStack = error instanceof Error ? error.stack : undefined;
+    
+    // Log full error for debugging
+    console.error("Full error:", { errorMessage, errorStack });
+    
+    res.status(500).json({ 
+      error: "Internal server error", 
+      details: errorMessage,
+      stack: process.env.NODE_ENV === "development" ? errorStack : undefined
+    });
   }
 }
