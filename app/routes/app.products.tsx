@@ -1,11 +1,10 @@
 import type { LoaderFunctionArgs, ActionFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData, useActionData } from "@remix-run/react";
-import { authenticate } from "~/lib/shopify.server";
-import { admin } from "@shopify/shopify-api";
+import { authenticateAdmin } from "~/lib/shopify.server";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const { admin, session } = await authenticate.admin(request);
+  const { admin, session } = await authenticateAdmin(request);
   
   // Fetch products from Shopify
   const response = await admin.graphql(`
@@ -44,7 +43,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 };
 
 export const action = async ({ request }: ActionFunctionArgs) => {
-  const { admin } = await authenticate.admin(request);
+  const { admin } = await authenticateAdmin(request);
   
   if (request.method === "POST") {
     const formData = await request.formData();
