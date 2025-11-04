@@ -1,0 +1,90 @@
+{% comment %}
+  Space Page Renderer Block
+  Renders a Space page on the storefront
+{% endcomment %}
+
+{% schema %}
+{
+  "name": "Space Page",
+  "target": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "page_id",
+      "label": "Page ID",
+      "info": "Enter the ID of the page to display"
+    }
+  ]
+}
+{% endschema %}
+
+{%- assign page_id = section.settings.page_id -%}
+
+{%- if page_id != blank -%}
+  {%- comment -%} Fetch page data from your backend API {%- endcomment -%}
+  {%- assign page_data = shop.metafields.space.pages[page_id] -%}
+  
+  {%- if page_data != blank -%}
+    <div class="space-page-wrapper" data-page-id="{{ page_id }}">
+      {%- comment -%} Render page content {%- endcomment -%}
+      {{ page_data.content | json }}
+    </div>
+  {%- else -%}
+    {%- comment -%} Fetch from API endpoint {%- endcomment -%}
+    <div class="space-page-wrapper" data-page-id="{{ page_id }}">
+      <script type="application/json" data-space-page="{{ page_id }}">
+        {"loading": true}
+      </script>
+    </div>
+  {%- endif -%}
+{%- else -%}
+  <div class="space-page-empty">
+    <p>Please configure a page ID in the theme editor.</p>
+  </div>
+{%- endif -%}
+
+<style>
+  .space-page-wrapper {
+    width: 100%;
+  }
+  
+  .space-page-empty {
+    padding: 40px;
+    text-align: center;
+    color: #999;
+  }
+</style>
+
+<script>
+  // Client-side rendering fallback (only if server-side rendering fails)
+  document.addEventListener('DOMContentLoaded', function() {
+    const pageElements = document.querySelectorAll('[data-space-page]');
+    pageElements.forEach(function(element) {
+      const pageId = element.getAttribute('data-space-page');
+      if (pageId) {
+        fetch(`/apps/space/api/pages/${pageId}`)
+          .then(response => response.json())
+          .then(data => {
+            if (data.content) {
+              renderSpacePage(element, data.content);
+            }
+          })
+          .catch(error => {
+            console.error('Error loading Space page:', error);
+          });
+      }
+    });
+  });
+  
+  function renderSpacePage(container, content) {
+    // Render the page content
+    // This is a simplified version - use the full renderer from renderer.ts
+    container.innerHTML = renderComponent(content.root);
+  }
+  
+  function renderComponent(node) {
+    // Basic rendering logic
+    // In production, use the full renderer implementation
+    return '<div>Page content</div>';
+  }
+</script>

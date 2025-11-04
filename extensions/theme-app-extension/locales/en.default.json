@@ -1,0 +1,12 @@
+{
+  "space_page": {
+    "name": "Space Page",
+    "settings": {
+      "page_id": {
+        "label": "Page ID",
+        "info": "Enter the ID of the page to display"
+      }
+    }
+  }
+}
+

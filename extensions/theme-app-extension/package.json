@@ -1,0 +1,7 @@
+{
+  "name": "space-renderer",
+  "version": "1.0.0",
+  "description": "Space Theme App Extension for rendering pages",
+  "type": "module"
+}
+
